@@ -1,0 +1,48 @@
+server:
+  port: 5001
+
+# 注册中心配置
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5000/eureka/  #eureka服务端提供的注册地址 参考服务端配置的这个路径
+  instance:
+    #此实例注册到eureka服务端的唯一的实例ID，ip-address会自动拿到启动服务器的IP
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+# 把actuator的监控端点公开
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+  # 指定读取的子文件
+#  profiles:
+#    active: dev
+
+spring:
+  application:
+    name: zh-cloud-config #此实例注册到eureka服务端的name
+  profiles:
+    active: native # 开启读取本地文件
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config #若配置中心在本地，本地的地址
+          #search-paths: config  # 查看config子目录
+
+      #server:
+        # 读取git上的远程地址
+        #git:
+        #  uri: https://github.com/***/****.git
+        #  defaultLabel: master # 分支
+        #  search-paths: foo,bar*  #Configserver会在 Git仓库根目录、 foo子目录，以及所有以 bar开始的子目录中查找配置文件。
+        #  clone-on-start: true  #启动时就clone仓库到本地，默认是在配置被首次请求时，config server才会clone git仓库
+        #  force-pull: true
+        #  username: token   # git用户名
+        #  password: 1111   # git密码
+
+

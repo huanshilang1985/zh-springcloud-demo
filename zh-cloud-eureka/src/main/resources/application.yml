@@ -1,0 +1,15 @@
+server:
+  port: 5000
+
+eureka:
+  server:
+    enable-self-preservation: false   #关闭自我保护机制
+    eviction-interval-timer-in-ms: 4000 #设置清理间隔（单位：毫秒 默认是60*1000）
+  instance:
+    hostname: localhost
+  client:
+      registerWithEureka: false #不把自己作为一个客户端注册到自己身上，默认是true，集群环境前两句不用配置
+      fetchRegistry: false  #不需要从服务端获取注册信息（因为在这里自己就是服务端，而且已经禁用自己注册了，eureka集群时要开放）
+      serviceUrl:
+        # eureka的注册地址，集群环境的多个地址用逗号分开
+        defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

@@ -1,0 +1,9 @@
+
+user系统
+user监控连接：http://localhost:5102/actuator/hystrix.stream
+查询user连接：http://localhost:5102/user/getUser
+
+
+
+
+

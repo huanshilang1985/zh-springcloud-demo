@@ -1,0 +1,28 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 # 请求超时后返回异常的时间
+      # 断路器设置
+      # 默认是10秒内请求20次失败，就会打开断路器，直接返回失败信息。
+      # 过5秒之后，会改为半开状态，偶尔请求一次，如果请求成功，就会关闭断路器。
+      circuitBreaker:
+        requestVolumeThreshold: 5 # 10秒请求失败5次就会打开断路器
+
+  # 限流设置
+  threadpool:
+    default:
+      coreSize: 10 # 设置连接池，只能同时处理10个请求
+    power:
+      coreSize: 5 # 请求power项目，同时接受5个请求
+
+# 把actuator的监控端点公开
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+aa: user

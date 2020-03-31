@@ -1,0 +1,28 @@
+server:
+  port: 5002
+eureka:
+  client:
+    serviceUrl:
+        defaultZone: http://localhost:5000/eureka/  #eureka服务端提供的注册地址 参考服务端配置的这个路径
+  instance:
+    instance-id: zuul-1
+    prefer-ip-address: true
+
+
+spring:
+  application:
+    name: zuul-server #此实例注册到eureka服务端的name
+
+zuul:
+  # 禁用直接访问微服务名，如果禁用多个用口号分隔，全部禁用*  ignored-services: server-power
+  routes:
+    # 自定义的微服务模块名
+    power:
+      serviceId: power-server
+      path: /power/**
+    order:
+      serviceId: order-server
+      path: /order/**
+    user:
+      serviceId: user-server
+      path: /user/**
